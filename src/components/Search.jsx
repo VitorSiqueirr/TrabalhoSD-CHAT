@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
+
 const Search = () => {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
@@ -35,8 +36,8 @@ const Search = () => {
     }
   };
 
-  const handleKey = (e) => {
-    e.code === "Enter" && handleSearch();
+  const handleKey = (event) => {
+    event.code === "Enter" && handleSearch();
   };
 
   const handleSelect = async () => {
@@ -46,9 +47,9 @@ const Search = () => {
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
     try {
-      const res = await getDoc(doc(db, "chats", combinedId));
+      const response = await getDoc(doc(db, "chats", combinedId));
 
-      if (!res.exists()) {
+      if (!response.exists()) {
         //create a chat in chats collection
         await setDoc(doc(db, "chats", combinedId), { messages: [] });
 
@@ -76,6 +77,7 @@ const Search = () => {
     setUser(null);
     setUsername("");
   };
+
   return (
     <div className="search">
       <div className="searchForm">
@@ -83,11 +85,11 @@ const Search = () => {
           type="text"
           placeholder="Find a user"
           onKeyDown={handleKey}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(event) => setUsername(event.target.value)}
           value={username}
         />
       </div>
-      {error && <span>User not found!</span>}
+      {error && <span>Usuário não encontrado!</span>}
       {user && (
         <div className="userChat" onClick={handleSelect}>
           <img src={user.photoURL} alt="" />

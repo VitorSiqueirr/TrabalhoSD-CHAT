@@ -10,7 +10,7 @@ import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyCqzBSjJxwLQ4dI0ESTH9Vqw7CSRZbe2FQ",
   authDomain: "marciuschat.firebaseapp.com",
-  databaseURL: "https://marciuschat-default-rtdb.firebaseio.com",
+  //databaseURL: "https://marciuschat-default-rtdb.firebaseio.com",
   projectId: "marciuschat",
   storageBucket: "marciuschat.appspot.com",
   messagingSenderId: "255506769482",

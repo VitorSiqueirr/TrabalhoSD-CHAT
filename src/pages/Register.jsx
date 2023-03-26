@@ -8,9 +8,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
+    setLoading(true); 
     event.preventDefault();
     const displayName = event.target[0].value;
     const email = event.target[1].value;
@@ -18,27 +20,21 @@ const Register = () => {
     const file = event.target[3].files[0];
 
     try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      // Criar usuário
+      const response = await createUserWithEmailAndPassword(auth, email, password);
 
-      const storageRef = ref(storage, displayName);
+      // Criar uma única imagem e nome
+      const date = new Date().getTime();
+      const storageRef = ref(storage, `${displayName + date}`);
 
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      // Register three observers:
-      uploadTask.on(
-        (error) => {
-          setError(true);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+      await uploadBytesResumable(storageRef, file).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try{
             await updateProfile(response.user, {
-              displayName: displayName,
+              displayName,
               photoURL: downloadURL,
             });
+
             await setDoc(doc(db, "users", response.user.uid), {
               uid: response.user.uid,
               displayName,
@@ -48,11 +44,16 @@ const Register = () => {
 
             await setDoc(doc(db, "userChats", response.user.uid), {});
             navigate("/");
-          });
-        }
-      );
+          } catch(error){
+            console.log(error);
+            setError(true);
+            setLoading(false);
+          }
+        });   
+      });
     } catch (error) {
       setError(true);
+      setLoading(false);
     }
   };
 
@@ -70,8 +71,9 @@ const Register = () => {
             <img src={Add} alt="" />
             <span>Adicione um avatar</span>
           </label>
-          <button>Cadastrar-se</button>
-          {error && <span>Algo deu errado</span>}
+          <button disabled={loading}>Cadastrar-se</button>
+          {loading && "Carregando imagem, aguade..."}
+          {error && <span>Algo deu errado ;-;</span>}
           {console.log(error)}
         </form>
         <p>
