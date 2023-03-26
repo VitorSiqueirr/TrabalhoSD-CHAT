@@ -10,7 +10,7 @@ const Sidebar = () => {
             <Search />
             <Chats/>
         </div>
-    )
-}
+    );
+};
 
 export default Sidebar;
