@@ -4,36 +4,34 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 
 const Login = () => {
-  const [error, setError] = useState(false);
+  const [err, setErr] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const email = event.target[0].value;
-    const password = event.target[1].value;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const email = e.target[0].value;
+    const password = e.target[1].value;
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/");
-    } catch (error) {
-      setError(true);
+    } catch (err) {
+      setErr(true);
     }
   };
-
   return (
     <div className="formContainer">
       <div className="formWrapper">
-        <span className="logo">Marcius Chat</span>
+        <span className="logo">Lama Chat</span>
         <span className="title">Login</span>
         <form onSubmit={handleSubmit}>
           <input type="email" placeholder="email" />
-          <input type="password" placeholder="senha" />
-          <button>Logar</button>
-          {error && <span>Algo deu errado</span>}
+          <input type="password" placeholder="password" />
+          <button>Sign in</button>
+          {err && <span>Login ou Senha errado!</span>}
         </form>
         <p>
-          Você ainda não possui uma conta?
-          <Link to="/register">Cadastre-se</Link>
+          You don't have an account? <Link to="/register">Register</Link>
         </p>
       </div>
     </div>

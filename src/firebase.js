@@ -14,7 +14,7 @@ const firebaseConfig = {
   projectId: "marciuschat",
   storageBucket: "marciuschat.appspot.com",
   messagingSenderId: "255506769482",
-  appId: "1:255506769482:web:69edb94bfdf343e3fee8b3"
+  appId: "1:255506769482:web:69edb94bfdf343e3fee8b3",
 };
 
 // Initialize Firebase

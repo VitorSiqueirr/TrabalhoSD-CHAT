@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef} from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 
@@ -9,20 +9,24 @@ const Message = ({ message }) => {
   const ref = useRef();
 
   useEffect(() => {
-    ref.current.scrollIntoView({ behavior: "smooth" });
+    ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
 
   return (
-    <div ref={ref}
+    <div
+      ref={ref}
       className={`message ${message.senderId === currentUser.uid && "owner"}`}
     >
       <div className="messageInfo">
-        <img 
-        src={message.senderId === currentUser.uid ? 
-          currentUser.photoUrl: data.user.photoUrl}
-        alt="" 
+        <img
+          src={
+            message.senderId === currentUser.uid
+              ? currentUser.photoURL
+              : data.user.photoURL
+          }
+          alt=""
         />
-        <span>Agora mesmo</span>
+        <span>just now</span>
       </div>
       <div className="messageContent">
         <p>{message.text}</p>

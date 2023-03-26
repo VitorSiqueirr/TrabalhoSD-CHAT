@@ -4,55 +4,56 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
-  const [error, setError] = useState(false);
+  const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    setLoading(true); 
-    event.preventDefault();
-    const displayName = event.target[0].value;
-    const email = event.target[1].value;
-    const password = event.target[2].value;
-    const file = event.target[3].files[0];
+  const handleSubmit = async (e) => {
+    setLoading(true);
+    e.preventDefault();
+    const displayName = e.target[0].value;
+    const email = e.target[1].value;
+    const password = e.target[2].value;
+    const file = e.target[3].files[0];
 
     try {
-      // Criar usuário
-      const response = await createUserWithEmailAndPassword(auth, email, password);
+      //Create user
+      const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      // Criar uma única imagem e nome
+      //Create a unique image name
       const date = new Date().getTime();
       const storageRef = ref(storage, `${displayName + date}`);
 
       await uploadBytesResumable(storageRef, file).then(() => {
         getDownloadURL(storageRef).then(async (downloadURL) => {
-          try{
-            await updateProfile(response.user, {
+          try {
+            //Update profile
+            await updateProfile(res.user, {
               displayName,
               photoURL: downloadURL,
             });
-
-            await setDoc(doc(db, "users", response.user.uid), {
-              uid: response.user.uid,
+            //create user on firestore
+            await setDoc(doc(db, "users", res.user.uid), {
+              uid: res.user.uid,
               displayName,
               email,
               photoURL: downloadURL,
             });
 
-            await setDoc(doc(db, "userChats", response.user.uid), {});
+            //create empty user chats on firestore
+            await setDoc(doc(db, "userChats", res.user.uid), {});
             navigate("/");
-          } catch(error){
-            console.log(error);
-            setError(true);
+          } catch (err) {
+            setErr(true);
             setLoading(false);
           }
-        });   
+        });
       });
-    } catch (error) {
-      setError(true);
+    } catch (err) {
+      setErr(true);
       setLoading(false);
     }
   };
@@ -60,24 +61,25 @@ const Register = () => {
   return (
     <div className="formContainer">
       <div className="formWrapper">
-        <span className="logo">Marcius Chat</span>
-        <span className="title">Registro</span>
+        <span className="logo">Lama Chat</span>
+        <span className="title">Register</span>
         <form onSubmit={handleSubmit}>
-          <input type="text" placeholder="nome" />
-          <input type="email" placeholder="email" />
-          <input type="password" placeholder="senha" />
-          <input style={{ display: "none" }} type="file" id="file" />
+          <input required type="text" placeholder="display name" />
+          <input required type="email" placeholder="email" />
+          <input required type="password" placeholder="password" />
+          <input required style={{ display: "none" }} type="file" id="file" />
           <label htmlFor="file">
             <img src={Add} alt="" />
-            <span>Adicione um avatar</span>
+            <span>Add an avatar</span>
           </label>
-          <button disabled={loading}>Cadastrar-se</button>
-          {loading && "Carregando imagem, aguade..."}
-          {error && <span>Algo deu errado ;-;</span>}
-          {console.log(error)}
+          <button disabled={loading}>Sign up</button>
+          {loading && "Uploading and compressing the image please wait..."}
+          {err && (
+            <span>Algo deu errado espere um momento e tente novamente!</span>
+          )}
         </form>
         <p>
-          Você já possui uma conta? <Link to="/login">Logue</Link>
+          You do have an account? <Link to="/register">Login</Link>
         </p>
       </div>
     </div>

@@ -12,11 +12,10 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
-
 const Search = () => {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
-  const [error, setError] = useState(false);
+  const [err, setErr] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
 
@@ -31,13 +30,13 @@ const Search = () => {
       querySnapshot.forEach((doc) => {
         setUser(doc.data());
       });
-    } catch (error) {
-      setError(true);
+    } catch (err) {
+      setErr(true);
     }
   };
 
-  const handleKey = (event) => {
-    event.code === "Enter" && handleSearch();
+  const handleKey = (e) => {
+    e.code === "Enter" && handleSearch();
   };
 
   const handleSelect = async () => {
@@ -47,9 +46,9 @@ const Search = () => {
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
     try {
-      const response = await getDoc(doc(db, "chats", combinedId));
+      const res = await getDoc(doc(db, "chats", combinedId));
 
-      if (!response.exists()) {
+      if (!res.exists()) {
         //create a chat in chats collection
         await setDoc(doc(db, "chats", combinedId), { messages: [] });
 
@@ -72,12 +71,11 @@ const Search = () => {
           [combinedId + ".date"]: serverTimestamp(),
         });
       }
-    } catch (error) {}
+    } catch (err) {}
 
     setUser(null);
     setUsername("");
   };
-
   return (
     <div className="search">
       <div className="searchForm">
@@ -85,11 +83,11 @@ const Search = () => {
           type="text"
           placeholder="Find a user"
           onKeyDown={handleKey}
-          onChange={(event) => setUsername(event.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
           value={username}
         />
       </div>
-      {error && <span>Usuário não encontrado!</span>}
+      {err && <span>User not found!</span>}
       {user && (
         <div className="userChat" onClick={handleSelect}>
           <img src={user.photoURL} alt="" />
