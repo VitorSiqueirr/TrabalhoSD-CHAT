@@ -1,27 +1,21 @@
-//Aqui você pode colocar pro site ficar modular para celular tbm em vez de so computador
-
 @mixin mobile {
   @media screen and (max-width: 480px) {
     @content;
   }
 }
-
 @mixin tablet {
   @media screen and (max-width: 768px) {
     @content;
   }
 }
-
 @mixin laptop {
   @media screen and (max-width: 1200px) {
     @content;
   }
 }
-//Define variaveis para poder decidir melhor as cores e outras variveis tipo de tamanho e tauz
-$darkColor: #462d52;
 
 .formContainer {
-  background-color: rgb(201, 160, 235);
+  background-color: #a7bcff;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -37,14 +31,15 @@ $darkColor: #462d52;
     align-items: center;
 
     .logo {
-      color: rgb(217, 54, 231);
+      color: #5d5b8d;
       font-weight: bold;
       font-size: 24px;
+
     }
 
     .title {
-      color: rgb(145, 56, 137);
-      font-size: 16px;
+      color: #5d5b8d;
+      font-size: 12px;
     }
 
     form {
@@ -55,27 +50,28 @@ $darkColor: #462d52;
       input {
         padding: 15px;
         border: none;
-        width: 100%;
-        border-bottom: 1px solid rgb(233, 185, 245);
+        width: 250px;
+        border-bottom: 1px solid #a7bcff;
         &::placeholder {
-          color: rgb(175, 123, 175);
+          color: rgb(175, 175, 175);
         }
       }
 
       button {
-        background-color: rgb(201, 140, 235);
+        background-color: #7b96ec;
         color: white;
         padding: 10px;
         font-weight: bold;
         border: none;
         cursor: pointer;
       }
+
       label {
         display: flex;
         align-items: center;
         gap: 10px;
-        color: rgb(180, 106, 174);
-        font-size: 14px;
+        color: #8da4f1;
+        font-size: 12px;
         cursor: pointer;
 
         img {
@@ -84,7 +80,7 @@ $darkColor: #462d52;
       }
     }
     p {
-      color: rgb(201, 140, 235);
+      color: #5d5b8d;
       font-size: 12px;
       margin-top: 10px;
     }
@@ -92,7 +88,7 @@ $darkColor: #462d52;
 }
 
 .home {
-  background-color: rgb(201, 160, 235);
+  background-color: #a7bcff;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -106,27 +102,28 @@ $darkColor: #462d52;
     display: flex;
     overflow: hidden;
     @include tablet {
-      width: 90%;
+     width: 90%;
     }
 
     .sidebar {
       flex: 1;
-      background-color: #563c61;
+      background-color: #3e3c61;
       position: relative;
+
       .navbar {
         display: flex;
         align-items: center;
-        background-color: #462d52;
+        background-color: #2f2d52;
         height: 50px;
         padding: 10px;
         justify-content: space-between;
         color: #ddddf7;
 
         .logo {
+          font-weight: bold;
           @include tablet {
             display: none;
           }
-          font-weight: bold;
         }
 
         .user {
@@ -134,7 +131,7 @@ $darkColor: #462d52;
           gap: 10px;
 
           img {
-            background-color: #efddf7;
+            background-color: #ddddf7;
             height: 24px;
             width: 24px;
             border-radius: 50%;
@@ -142,8 +139,8 @@ $darkColor: #462d52;
           }
 
           button {
-            background-color: #7d5b8d;
-            color: #efddf7;
+            background-color: #5d5b8d;
+            color: #ddddf7;
             font-size: 10px;
             border: none;
             cursor: pointer;
@@ -154,7 +151,6 @@ $darkColor: #462d52;
           }
         }
       }
-
       .search {
         border-bottom: 1px solid gray;
 
@@ -183,7 +179,7 @@ $darkColor: #462d52;
         cursor: pointer;
 
         &:hover {
-          background-color: #452d52;
+          background-color: #2f2d52;
         }
 
         img {
@@ -210,7 +206,7 @@ $darkColor: #462d52;
 
       .chatInfo {
         height: 50px;
-        background-color: #745183;
+        background-color: #5d5b8d;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -229,7 +225,7 @@ $darkColor: #462d52;
       }
 
       .messages {
-        background-color: #f0ddf7;
+        background-color: #ddddf7;
         padding: 10px;
         height: calc(100% - 160px);
         overflow: scroll;
@@ -244,6 +240,7 @@ $darkColor: #462d52;
             flex-direction: column;
             color: gray;
             font-weight: 300;
+
             img {
               width: 40px;
               height: 40px;
@@ -259,10 +256,11 @@ $darkColor: #462d52;
 
             p {
               background-color: white;
-              padding: 10px;
+              padding: 10px 20px;
               border-radius: 0px 10px 10px 10px;
               max-width: max-content;
             }
+
             img {
               width: 50%;
             }
@@ -270,10 +268,11 @@ $darkColor: #462d52;
 
           &.owner {
             flex-direction: row-reverse;
+
             .messageContent {
               align-items: flex-end;
               p {
-                background-color: #c98df1;
+                background-color: #8da4f1;
                 color: white;
                 border-radius: 10px 0px 10px 10px;
               }
@@ -294,13 +293,14 @@ $darkColor: #462d52;
           width: 100%;
           border: none;
           outline: none;
-          color: #492d52;
+          color: #2f2d52;
           font-size: 18px;
 
           &::placeholder {
             color: lightgray;
           }
         }
+
         .send {
           display: flex;
           align-items: center;
@@ -312,9 +312,10 @@ $darkColor: #462d52;
           }
 
           button {
-            bottom: none;
+            border: none;
             padding: 10px 15px;
             color: white;
+            background-color: #8da4f1;
             cursor: pointer;
           }
         }
