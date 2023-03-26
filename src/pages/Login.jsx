@@ -22,16 +22,16 @@ const Login = () => {
   return (
     <div className="formContainer">
       <div className="formWrapper">
-        <span className="logo">Lama Chat</span>
+        <span className="logo">Marcius Chat</span>
         <span className="title">Login</span>
         <form onSubmit={handleSubmit}>
           <input type="email" placeholder="email" />
-          <input type="password" placeholder="password" />
-          <button>Sign in</button>
-          {err && <span>Login ou Senha errado!</span>}
+          <input type="password" placeholder="senha" />
+          <button>Login</button>
+          {err && <span>Email ou senha incorreta!</span>}
         </form>
         <p>
-          You don't have an account? <Link to="/register">Register</Link>
+          Não tem uma conta? <Link to="/register">Registre-se</Link>
         </p>
       </div>
     </div>

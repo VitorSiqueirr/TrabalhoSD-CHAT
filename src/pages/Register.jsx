@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Add from "../images/addAvatar.png";
+import Add from "../img/addAvatar.png";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -61,25 +61,23 @@ const Register = () => {
   return (
     <div className="formContainer">
       <div className="formWrapper">
-        <span className="logo">Lama Chat</span>
+        <span className="logo">Marcius Chat</span>
         <span className="title">Register</span>
         <form onSubmit={handleSubmit}>
-          <input required type="text" placeholder="display name" />
+          <input required type="text" placeholder="nome" />
           <input required type="email" placeholder="email" />
-          <input required type="password" placeholder="password" />
+          <input required type="password" placeholder="senha" />
           <input required style={{ display: "none" }} type="file" id="file" />
           <label htmlFor="file">
             <img src={Add} alt="" />
             <span>Add an avatar</span>
           </label>
           <button disabled={loading}>Sign up</button>
-          {loading && "Uploading and compressing the image please wait..."}
-          {err && (
-            <span>Algo deu errado espere um momento e tente novamente!</span>
-          )}
+          {loading && "Enviando e comprimindo imagem so um momento..."}
+          {err && <span>Algo deu errado espere</span>}
         </form>
         <p>
-          You do have an account? <Link to="/register">Login</Link>
+          Já tem uma conta? <Link to="/register">Login</Link>
         </p>
       </div>
     </div>
