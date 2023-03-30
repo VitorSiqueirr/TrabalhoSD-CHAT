@@ -73,11 +73,11 @@ const Input = () => {
     setText("");
     setImg(null);
   };
-  function handleKeyPress(event) {
-    if (event.key === "Enter") {
+  handleKey = (e) => {
+    if (e.key === "Enter") {
       handleSend();
     }
-  }
+  };
   return (
     <div className="input">
       <input
@@ -85,7 +85,7 @@ const Input = () => {
         placeholder="Digite algo..."
         onChange={(e) => setText(e.target.value)}
         value={text}
-        onKeyDown={(event) => handleKeyPress(event)}
+        onKeyDown={handleKey}
       />
       <div className="send">
         <img src={Attach} alt="" />
